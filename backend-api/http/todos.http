@@ -4,6 +4,6 @@ POST {{api}}/todos
 Content-Type: application/json
 
 {
-    "title":"asda",
-    "description":"asda"
+    "title":"lorem ipsum",
+    "description":"lorem ipsum"
 }
