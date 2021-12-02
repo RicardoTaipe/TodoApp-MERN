@@ -4,6 +4,8 @@ const path = require("path");
 const cors = require("cors");
 const helmet = require("helmet");
 const compression = require("compression");
+require("dotenv").config();
+require("./database");
 
 const app = express();
 
