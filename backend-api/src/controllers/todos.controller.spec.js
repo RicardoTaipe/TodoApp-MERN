@@ -10,6 +10,10 @@ const createError = require("http-errors");
 
 jest.mock("../models/todo");
 
+afterEach(() => {
+  Todo.mockRestore();
+});
+
 test("should add a new todo", async () => {
   const todo = {
     title: "asda",
@@ -117,5 +121,16 @@ test("should find a todo by id", async () => {
   const expectedTodo = await getTodo(id);
   expect(spy).toHaveBeenCalled();
   expect(expectedTodo).toEqual(todo);
+  spy.mockRestore();
+});
+
+test("should not find a todo by id", async () => {
+  const spy = jest.spyOn(Todo, "findOne").mockResolvedValue(false);
+  const id = "61ac04e8e581860cd81e44aa";
+  try {
+    await getTodo(id);
+  } catch (error) {
+    expect(error).toEqual(new createError.NotFound(["Todo not found"]));
+  }
   spy.mockRestore();
 });
