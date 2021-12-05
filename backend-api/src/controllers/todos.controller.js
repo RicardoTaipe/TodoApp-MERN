@@ -1,8 +1,8 @@
 const Todo = require("../models/todo");
 const createError = require("http-errors");
 
-const createTodo = async (req, res, next) => {
-  const { title, description } = req.body;
+const createTodo = async (body) => {
+  const { title, description } = body;
 
   const errors = {};
   if (!title.trim()) errors.title = "title must not be empty";
@@ -13,7 +13,7 @@ const createTodo = async (req, res, next) => {
 
   const newTodo = new Todo({ title, description });
   const result = await newTodo.save(newTodo);
-  res.status(201).json(result);
+  return result;
 };
 
 module.exports = { createTodo };
