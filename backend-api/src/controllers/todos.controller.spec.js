@@ -1,4 +1,4 @@
-const { createTodo } = require("./todos.controller");
+const { createTodo, getTodos } = require("./todos.controller");
 const Todo = require("../models/todo");
 const createError = require("http-errors");
 
@@ -12,11 +12,10 @@ test("should add a new todo", async () => {
 
   const spy = jest.spyOn(Todo.prototype, "save").mockResolvedValue(todo);
 
-  await createTodo(todo);
+  const newTodo = await createTodo(todo);
 
-  expect(Todo).toHaveBeenCalledTimes(1);
-  expect(Todo).toHaveBeenCalledWith(todo);
   expect(spy).toHaveBeenCalled();
+  expect(newTodo).toEqual(todo);
 
   spy.mockRestore();
 });
@@ -29,7 +28,17 @@ test("should not add a new todo", async () => {
 
   try {
     await createTodo(todo);
-  } catch (e) {
-    expect(e).toEqual(new createError.BadRequest());
+  } catch (error) {
+    expect(error).toEqual(new createError.BadRequest());
   }
+});
+
+test("should get all todos", async () => {
+  const spy = jest.spyOn(Todo, "find");
+
+  await getTodos();
+
+  expect(spy).toHaveBeenCalled();
+
+  spy.mockRestore();
 });

@@ -12,8 +12,11 @@ const createTodo = async (body) => {
   }
 
   const newTodo = new Todo({ title, description });
-  const result = await newTodo.save(newTodo);
-  return result;
+  return await newTodo.save(newTodo);
 };
 
-module.exports = { createTodo };
+const getTodos = async () => {
+  return await Todo.find();
+};
+
+module.exports = { createTodo, getTodos };

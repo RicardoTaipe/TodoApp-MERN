@@ -7,3 +7,5 @@ Content-Type: application/json
     "title":"lorem ipsum",
     "description":"lorem ipsum"
 }
+###
+GET {{api}}/todos
