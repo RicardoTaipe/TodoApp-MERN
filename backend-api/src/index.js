@@ -11,6 +11,7 @@ require("./database");
 //routes
 
 const todoRoutes = require("./routes/todos.routes");
+const userRoutes = require("./routes/users.routes");
 const app = express();
 
 //Settings
@@ -24,6 +25,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan("dev"));
 app.use(todoRoutes);
+app.use(userRoutes);
 
 //Custom error handler
 app.use((error, _, res, next) => {
