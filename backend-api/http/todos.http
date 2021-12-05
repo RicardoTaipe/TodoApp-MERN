@@ -9,7 +9,13 @@ Content-Type: application/json
 }
 ###
 GET {{api}}/todos
-
-
 ###
 DELETE {{api}}/todos/61ac04e8e581860cd81e44aa
+###
+PUT {{api}}/todos/61ac27a46e2bb590ab6c1ce4
+Content-Type: application/json
+
+{
+    "title":"test ipsum",
+    "description":"lorem ipsum"
+}

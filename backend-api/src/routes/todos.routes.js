@@ -19,7 +19,7 @@ router.delete("/todos/:id", async (req, res) => {
 });
 
 router.put("/todos/:id", async (req, res) => {
-  res.send(await updateTodo(req.params.id));
+  res.send(await updateTodo(req.params.id, req.body));
 });
 
 module.exports = router;
