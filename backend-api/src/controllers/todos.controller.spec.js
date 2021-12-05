@@ -34,11 +34,21 @@ test("should not add a new todo", async () => {
 });
 
 test("should get all todos", async () => {
-  const spy = jest.spyOn(Todo, "find");
+  const expectedTodos = [
+    {
+      title: "asda",
+      description: "lorem ipusm",
+    },
+    {
+      title: "asda",
+      description: "lorem ipusm",
+    },
+  ];
+  const spy = jest.spyOn(Todo, "find").mockResolvedValue(expectedTodos);
 
-  await getTodos();
+  const todos = await getTodos();
 
   expect(spy).toHaveBeenCalled();
-
+  expect(todos).toEqual(expectedTodos);
   spy.mockRestore();
 });
