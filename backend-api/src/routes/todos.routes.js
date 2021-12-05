@@ -2,9 +2,14 @@ const router = require("express-promise-router")();
 const {
   createTodo,
   getTodos,
+  getTodo,
   deleteTodo,
   updateTodo,
 } = require("../controllers/todos.controller");
+
+router.get("/todos/:id", async (req, res) => {
+  res.send(await getTodo(req.params.id));
+});
 
 router.get("/todos", async (req, res) => {
   res.send(await getTodos());

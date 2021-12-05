@@ -35,4 +35,12 @@ const updateTodo = async (id, body) => {
   await Todo.findOneAndUpdate(id, body);
 };
 
-module.exports = { createTodo, getTodos, deleteTodo, updateTodo };
+const getTodo = async (id) => {
+  const todo = await Todo.findOne({ _id: id });
+  if (!todo) {
+    throw createError(404, "Todo not found");
+  }
+  return todo;
+};
+
+module.exports = { createTodo, getTodos, deleteTodo, updateTodo, getTodo };

@@ -19,3 +19,5 @@ Content-Type: application/json
     "title":"test ipsum",
     "description":"lorem ipsum"
 }
+###
+GET {{api}}/todos/61ac27a46e2bb590ab6c1ce4

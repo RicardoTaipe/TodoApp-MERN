@@ -1,6 +1,7 @@
 const {
   createTodo,
   getTodos,
+  getTodo,
   deleteTodo,
   updateTodo,
 } = require("./todos.controller");
@@ -104,4 +105,17 @@ test("should not update a todo when todo not found", async () => {
   } catch (error) {
     expect(error).toEqual(new createError.NotFound(["Todo not found"]));
   }
+});
+
+test("should find a todo by id", async () => {
+  const todo = {
+    title: "asda",
+    description: "lorem ipusm",
+  };
+  const spy = jest.spyOn(Todo, "findOne").mockResolvedValue(todo);
+  const id = "61ac04e8e581860cd81e44aa";
+  const expectedTodo = await getTodo(id);
+  expect(spy).toHaveBeenCalled();
+  expect(expectedTodo).toEqual(todo);
+  spy.mockRestore();
 });
