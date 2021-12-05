@@ -1,4 +1,9 @@
-const { createTodo, getTodos, deleteTodo } = require("./todos.controller");
+const {
+  createTodo,
+  getTodos,
+  deleteTodo,
+  updateTodo,
+} = require("./todos.controller");
 const Todo = require("../models/todo");
 const createError = require("http-errors");
 
@@ -54,9 +59,49 @@ test("should get all todos", async () => {
 });
 
 test("should delete a todo by id", async () => {
-  const spy = jest.spyOn(Todo, "deleteOne");
+  const spyFind = jest.spyOn(Todo, "findOne").mockResolvedValue(true);
   const id = "61ac04e8e581860cd81e44aa";
+  const spyDelete = jest.spyOn(Todo, "deleteOne");
   await deleteTodo(id);
+  expect(spyDelete).toHaveBeenCalled();
+  expect(spyDelete).toHaveBeenCalledWith({ _id: id });
+  spyDelete.mockRestore();
+});
+
+test("should not delete a todo when todo not found", async () => {
+  jest.spyOn(Todo, "findOne").mockResolvedValue(false);
+  const id = "61ac04e8e581860cd81e44aa";
+
+  try {
+    await deleteTodo(id);
+  } catch (error) {
+    expect(error).toEqual(new createError.NotFound(["Todo not found"]));
+  }
+});
+
+test("should update a todo by id", async () => {
+  jest.spyOn(Todo, "findOne").mockResolvedValue(true);
+  const todo = {
+    title: "asda",
+    description: "lorem ipusm",
+  };
+  const spy = jest.spyOn(Todo, "findOneAndUpdate");
+  const id = "61ac04e8e581860cd81e44aa";
+  await updateTodo(id, todo);
   expect(spy).toHaveBeenCalled();
-  expect(spy).toHaveBeenCalledWith({ _id: id });
+  expect(spy).toHaveBeenCalledWith(id, todo);
+});
+
+test("should not update a todo when todo not found", async () => {
+  const spy = jest.spyOn(Todo, "findOne").mockResolvedValue(false);
+  const id = "61ac04e8e581860cd81e44aa";
+  const todo = {
+    title: "asda",
+    description: "lorem ipusm",
+  };
+  try {
+    await updateTodo(id, todo);
+  } catch (error) {
+    expect(error).toEqual(new createError.NotFound(["Todo not found"]));
+  }
 });

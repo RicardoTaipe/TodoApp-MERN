@@ -9,3 +9,7 @@ Content-Type: application/json
 }
 ###
 GET {{api}}/todos
+
+
+###
+DELETE {{api}}/todos/61ac04e8e581860cd81e44aa
