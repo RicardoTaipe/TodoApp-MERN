@@ -9,4 +9,8 @@ router.post("/todos", async (req, res) => {
   res.status(201).send(await createTodo(req.body));
 });
 
+router.delete("/todos/:id", async (req, res) => {
+  res.send(await deleteTodo(req.params.id));
+});
+
 module.exports = router;

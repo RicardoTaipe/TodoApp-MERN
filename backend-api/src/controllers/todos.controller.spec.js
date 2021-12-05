@@ -1,4 +1,4 @@
-const { createTodo, getTodos } = require("./todos.controller");
+const { createTodo, getTodos, deleteTodo } = require("./todos.controller");
 const Todo = require("../models/todo");
 const createError = require("http-errors");
 
@@ -51,4 +51,12 @@ test("should get all todos", async () => {
   expect(spy).toHaveBeenCalled();
   expect(todos).toEqual(expectedTodos);
   spy.mockRestore();
+});
+
+test("should delete a todo by id", async () => {
+  const spy = jest.spyOn(Todo, "deleteOne");
+  const id = "61ac04e8e581860cd81e44aa";
+  await deleteTodo(id);
+  expect(spy).toHaveBeenCalled();
+  expect(spy).toHaveBeenCalledWith({ _id: id });
 });

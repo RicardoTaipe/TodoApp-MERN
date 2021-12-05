@@ -19,4 +19,8 @@ const getTodos = async () => {
   return await Todo.find();
 };
 
-module.exports = { createTodo, getTodos };
+const deleteTodo = async (id) => {
+  await Todo.deleteOne({ _id: id });
+};
+
+module.exports = { createTodo, getTodos, deleteTodo };
