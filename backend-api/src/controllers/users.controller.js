@@ -2,6 +2,14 @@ const User = require("../models/user");
 const config = require("../config/configuration");
 const createError = require("http-errors");
 const jwt = require("jsonwebtoken");
+const cloudinary = require("cloudinary").v2;
+const fs = require("fs-extra");
+
+cloudinary.config({
+  cloud_name: config.CLOUD_NAME,
+  api_key: config.API_KEY,
+  api_secret: config.API_SECRET,
+});
 
 const signUp = async (body) => {
   const { email, password, name, username } = body;
@@ -42,4 +50,16 @@ const updateUserDetails = async (id, body) => {
   return await User.findOneAndUpdate({ _id: id }, body);
 };
 
-module.exports = { signUp, logIn, getUserDetail, updateUserDetails };
+const uploadProfilePhoto = async (id, file) => {
+  const result = await cloudinary.uploader.upload(file.path);
+  await User.updateOne({ _id: id }, { imageURL: result.secure_url });
+  return await fs.unlink(file.path);
+};
+
+module.exports = {
+  signUp,
+  logIn,
+  getUserDetail,
+  updateUserDetails,
+  uploadProfilePhoto,
+};

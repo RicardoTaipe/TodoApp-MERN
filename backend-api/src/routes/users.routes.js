@@ -3,6 +3,8 @@ const {
   signUp,
   logIn,
   getUserDetail,
+  updateUserDetails,
+  uploadProfilePhoto,
 } = require("../controllers/users.controller");
 const isAuthenticated = require("../middlewares/auth");
 
@@ -18,8 +20,12 @@ router.get("/users", isAuthenticated, async (req, res) => {
   res.send(await getUserDetail(req.userData.userId));
 });
 
-router.post("/", isAuthenticated, async (req, res) => {
+router.post("/users", isAuthenticated, async (req, res) => {
   res.send(await updateUserDetails(req.userData.userId, req.body));
+});
+
+router.post("/users/image", isAuthenticated, async (req, res) => {
+  res.send(await uploadProfilePhoto(req.userData.userId, req.file));
 });
 
 module.exports = router;
