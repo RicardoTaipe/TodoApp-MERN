@@ -34,4 +34,8 @@ const logIn = async (body) => {
   return { uid: user._id, token };
 };
 
-module.exports = { signUp, logIn };
+const getUserDetail = async (id) => {
+  return await User.findOne({ _id: id });
+};
+
+module.exports = { signUp, logIn, getUserDetail };
