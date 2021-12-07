@@ -13,11 +13,11 @@ router.get("/todos/:id", isAuthenticated, async (req, res) => {
 });
 
 router.get("/todos", isAuthenticated, async (req, res) => {
-  res.send(await getTodos());
+  res.send(await getTodos(req.userData.userId));
 });
 
 router.post("/todos", isAuthenticated, async (req, res) => {
-  res.status(201).send(await createTodo(req.body));
+  res.status(201).send(await createTodo(req.body, req.userData.userId));
 });
 
 router.delete("/todos/:id", isAuthenticated, async (req, res) => {

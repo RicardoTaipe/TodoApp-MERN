@@ -1,7 +1,7 @@
 const Todo = require("../models/todo");
 const createError = require("http-errors");
 
-const createTodo = async (body) => {
+const createTodo = async (body, id) => {
   const { title, description } = body;
 
   const errors = {};
@@ -11,12 +11,12 @@ const createTodo = async (body) => {
     throw createError(400, errors);
   }
 
-  const newTodo = new Todo({ title, description });
+  const newTodo = new Todo({ title, description, user: id });
   return await newTodo.save(newTodo);
 };
 
-const getTodos = async () => {
-  return await Todo.find();
+const getTodos = async (id) => {
+  return await Todo.find({ user: id }).sort({ createdAt: "desc" });
 };
 
 const deleteTodo = async (id) => {
