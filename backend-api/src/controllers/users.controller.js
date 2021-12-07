@@ -38,4 +38,8 @@ const getUserDetail = async (id) => {
   return await User.findOne({ _id: id });
 };
 
-module.exports = { signUp, logIn, getUserDetail };
+const updateUserDetails = async (id, body) => {
+  return await User.findOneAndUpdate({ _id: id }, body);
+};
+
+module.exports = { signUp, logIn, getUserDetail, updateUserDetails };

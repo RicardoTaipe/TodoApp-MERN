@@ -15,7 +15,11 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/users", isAuthenticated, async (req, res) => {
-  res.send(await getUserDetail(req.body.uid));
+  res.send(await getUserDetail(req.userData.userId));
+});
+
+router.post("/", isAuthenticated, async (req, res) => {
+  res.send(await updateUserDetails(req.userData.userId, req.body));
 });
 
 module.exports = router;
