@@ -6,24 +6,25 @@ const {
   deleteTodo,
   updateTodo,
 } = require("../controllers/todos.controller");
+const isAuthenticated = require("../middlewares/auth");
 
-router.get("/todos/:id", async (req, res) => {
+router.get("/todos/:id", isAuthenticated, async (req, res) => {
   res.send(await getTodo(req.params.id));
 });
 
-router.get("/todos", async (req, res) => {
+router.get("/todos", isAuthenticated, async (req, res) => {
   res.send(await getTodos());
 });
 
-router.post("/todos", async (req, res) => {
+router.post("/todos", isAuthenticated, async (req, res) => {
   res.status(201).send(await createTodo(req.body));
 });
 
-router.delete("/todos/:id", async (req, res) => {
+router.delete("/todos/:id", isAuthenticated, async (req, res) => {
   res.send(await deleteTodo(req.params.id));
 });
 
-router.put("/todos/:id", async (req, res) => {
+router.put("/todos/:id", isAuthenticated, async (req, res) => {
   res.send(await updateTodo(req.params.id, req.body));
 });
 
