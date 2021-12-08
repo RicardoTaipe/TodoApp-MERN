@@ -16,7 +16,8 @@ const createTodo = async (body, id) => {
 };
 
 const getTodos = async (id) => {
-  return await Todo.find({ user: id }).sort({ createdAt: "desc" });
+  const todos = await Todo.find({ user: id }).sort({ createdAt: "desc" });
+  return todos;
 };
 
 const deleteTodo = async (id) => {

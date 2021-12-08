@@ -23,7 +23,6 @@ test("should add a new todo", async () => {
   const spy = jest.spyOn(Todo.prototype, "save").mockResolvedValue(todo);
 
   const newTodo = await createTodo(todo);
-
   expect(spy).toHaveBeenCalled();
   expect(newTodo).toEqual(todo);
 
@@ -54,7 +53,11 @@ test("should get all todos", async () => {
       description: "lorem ipusm",
     },
   ];
-  const spy = jest.spyOn(Todo, "find").mockResolvedValue(expectedTodos);
+
+  const TodoFind = jest.fn(() => ({
+    sort: jest.fn(() => expectedTodos),
+  }));
+  const spy = jest.spyOn(Todo, "find").mockImplementation(TodoFind);
 
   const todos = await getTodos();
 
@@ -76,7 +79,7 @@ test("should delete a todo by id", async () => {
 test("should not delete a todo when todo not found", async () => {
   jest.spyOn(Todo, "findOne").mockResolvedValue(false);
   const id = "61ac04e8e581860cd81e44aa";
-
+  expect.assertions(1);
   try {
     await deleteTodo(id);
   } catch (error) {
@@ -104,6 +107,7 @@ test("should not update a todo when todo not found", async () => {
     title: "asda",
     description: "lorem ipusm",
   };
+  expect.assertions(1);
   try {
     await updateTodo(id, todo);
   } catch (error) {
@@ -127,6 +131,7 @@ test("should find a todo by id", async () => {
 test("should not find a todo by id", async () => {
   const spy = jest.spyOn(Todo, "findOne").mockResolvedValue(false);
   const id = "61ac04e8e581860cd81e44aa";
+  expect.assertions(1);
   try {
     await getTodo(id);
   } catch (error) {
