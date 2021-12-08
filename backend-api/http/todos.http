@@ -1,6 +1,7 @@
 @api=http://localhost:8080
-
+@credential=Bearer your token
 POST {{api}}/todos
+Authorization: {{credential}}
 Content-Type: application/json
 
 {
@@ -9,6 +10,7 @@ Content-Type: application/json
 }
 ###
 GET {{api}}/todos
+Authorization: Bearer {{credential}}
 ###
 DELETE {{api}}/todos/61ac04e8e581860cd81e44aa
 ###
