@@ -37,6 +37,10 @@
     "coverageReporters": [
       "json",
       "html"
+    ],
+    "coveragePathIgnorePatterns": [
+      "./src/models",
+      "/node_modules/"
     ]
   }
 }
