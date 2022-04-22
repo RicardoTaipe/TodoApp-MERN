@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -185,14 +185,9 @@ export default function LogIn() {
             Sign In
             {loading && <CircularProgress size={30} />}
           </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
+          <Grid container justifyContent="center">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="signup" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
