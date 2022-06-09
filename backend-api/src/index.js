@@ -6,6 +6,8 @@ const helmet = require("helmet");
 const multer = require("multer");
 const morgan = require("morgan");
 const compression = require("compression");
+const customErrorHandler = require("./middlewares/error-handler");
+
 require("dotenv").config();
 require("./database");
 
@@ -54,18 +56,7 @@ app.use(
 );
 
 //Custom error handler
-app.use((error, _, res, next) => {
-  res.status(error.status || 500);
-  const _error = {
-    status: error.status,
-    error,
-  };
-  if (process.env.NODE_ENV !== "production") {
-    _error["stack"] = error.stack;
-  }
-  res.json(_error);
-  next();
-});
+app.use(customErrorHandler);
 
 let server = http.createServer(app);
 server.listen(app.get("port"), () => {
