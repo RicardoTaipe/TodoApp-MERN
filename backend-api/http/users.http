@@ -1,4 +1,5 @@
 @api=http://localhost:8080
+@credential=Bearer YOUR_TOKEN
 
 POST {{api}}/signup
 Content-Type: application/json
@@ -21,7 +22,7 @@ Content-Type: application/json
 ###
 GET  {{api}}/users
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MWFjM2YwNTBlMTRhZjI1OTkzMTg2ZmIiLCJpYXQiOjE2Mzg4OTI5NjgsImV4cCI6MTYzODk3OTM2OH0.Oji1yuyYANgCxAKXWn_5sUy3_qnEgH1QDY0NSXmaEfE
+Authorization: {{credential}}
 
 {
     "uid": "61ac3f050e14af25993186fb"

@@ -1,5 +1,5 @@
 @api=http://localhost:8080
-@credential=Bearer your token
+@credential=Bearer YOUR_TOKEN
 POST {{api}}/todos
 Authorization: {{credential}}
 Content-Type: application/json
