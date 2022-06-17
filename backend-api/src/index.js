@@ -3,7 +3,7 @@ const http = require("http");
 const path = require("path");
 const cors = require("cors");
 const helmet = require("helmet");
-const multer = require("multer");
+const multer = require("./middlewares/uploader");
 const morgan = require("morgan");
 const compression = require("compression");
 const customErrorHandler = require("./middlewares/error-handler");
@@ -32,33 +32,12 @@ app.use(userRoutes);
 
 //Static files
 app.use(express.static(path.join(__dirname, "public")));
-
-//setting multer
-const storage = multer.diskStorage({
-  destination: path.join(__dirname, "public/uploads"),
-  filename: (_, file, cb) => {
-    cb(null, new Date().getTime() + path.extname(file.originalname));
-  },
-});
-app.use(
-  multer({
-    storage,
-    fileFilter: (_, file, cb) => {
-      const fileTypes = /jpeg|jpg|png|gif/;
-      const mimeType = fileTypes.test(file.mimetype);
-      const extname = fileTypes.test(path.extname(file.originalname));
-      if (mimeType && extname) {
-        return cb(null, true);
-      }
-      cb(new Error("Error: extension file must be jpg or png"));
-    },
-  }).single("image")
-);
+app.use(multer.single("image"));
 
 //Custom error handler
 app.use(customErrorHandler);
 
-let server = http.createServer(app);
+const server = http.createServer(app);
 server.listen(app.get("port"), () => {
   console.log("Server on port ", app.get("port"));
 });
